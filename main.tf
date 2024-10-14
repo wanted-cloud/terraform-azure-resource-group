@@ -1,8 +1,12 @@
 /**
- * # Main title
+ * # wanted-cloud/terraform-azure-resource-group
  *
- * Everything in this comment block will get extracted.
+ * Terraform building block for creation and management of Azure Resource Group. 
  *
- * You can put simple text or complete Markdown content
- * here.
  */
+resource "azurerm_resource_group" "this" {
+  name       = var.resource_group_name
+  location   = var.region
+  managed_by = var.managed_by != "" ? var.managed_by : null
+  tags       = local.tags
+}
