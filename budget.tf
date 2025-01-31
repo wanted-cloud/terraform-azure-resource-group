@@ -14,26 +14,9 @@ resource "azurerm_consumption_budget_resource_group" "this" {
     end_date   = each.value.end_date
   }
 
-  filter {
-    dynamic "dimension" {
-      for_each = {
-        for dimension in each.value.filter.dimensions : dimension.name => dimension
-      }
-      content {
-        name   = dimension.value.name
-        values = dimension.value.value
-      }
-
-    }
-
-    dynamic "tag" {
-      for_each = {
-        for tag in each.value.filter.tag : tag.name => tag
-      }
-      content {
-        name   = tag.value.name
-        values = tag.value.values
-      }
+  dynamic "filter" {
+    for_each = lookup(each.value, "filter", null) != null ? [each.value.filter] : []
+    content {
 
     }
   }

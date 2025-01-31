@@ -47,25 +47,28 @@ variable "budgets" {
     object({
       name       = string
       amount     = number
-      time_grain = string
+      time_grain = optional(string)
       start_date = string
-      end_date   = string
-      filter = object({
-        dimension = list(object({
+      end_date   = optional(string)
+      filter = optional(object({
+        dimensions = list(object({
           name   = string
           values = list(string)
         }))
-        tag = list(object({
+        tags = list(object({
           name   = string
           values = list(string)
         }))
-      })
+      }), null)
       notifications = list(object({
-        enabled        = bool
+        enabled        = optional(bool, true)
+        name           = string
         threshold      = number
         operator       = string
-        threshold_type = string
-        contact_emails = list(string)
+        threshold_type = optional(string)
+        contact_emails = optional(list(string))
+        contact_groups = optional(list(string))
+        contact_roles  = optional(list(string))
       }))
     })
   )
