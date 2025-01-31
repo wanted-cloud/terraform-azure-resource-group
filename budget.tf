@@ -3,10 +3,11 @@ resource "azurerm_consumption_budget_resource_group" "this" {
     for budget in var.budgets : budget.name => budget
   }
 
-  name              = each.value.name
   resource_group_id = azurerm_resource_group.this.id
-  amount            = each.value.amount
-  time_grain        = each.value.time_grain
+
+  name       = each.value.name
+  amount     = each.value.amount
+  time_grain = each.value.time_grain
 
   time_period {
     start_date = each.value.start_date

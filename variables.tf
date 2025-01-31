@@ -1,11 +1,31 @@
 variable "resource_group_name" {
   description = "The name of the resource group in which the resources will be created."
   type        = string
+
+  validation {
+    condition = can(
+      regex(
+        local.metadata.validator_expressions["azurerm_resource_group_name"],
+        var.resource_group_name
+      )
+    )
+    error_message = local.metadata.validator_error_messages["azurerm_resource_group_name"]
+  }
 }
 
 variable "location" {
-  description = "The location/region where the resources will be created."
+  description = "The location/region where the resources will be created!"
   type        = string
+
+  validation {
+    condition = can(
+      regex(
+        local.metadata.validator_expressions["azurerm_location"],
+        var.location
+      )
+    )
+    error_message = local.metadata.validator_error_messages["azurerm_location"]
+  }
 }
 
 variable "tags" {

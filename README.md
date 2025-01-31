@@ -33,7 +33,7 @@ The following input variables are required:
 
 ### <a name="input_location"></a> [location](#input\_location)
 
-Description: The location/region where the resources will be created.
+Description: The location/region where the resources will be created!
 
 Type: `string`
 
@@ -94,44 +94,25 @@ Default: `""`
 
 ### <a name="input_metadata"></a> [metadata](#input\_metadata)
 
-Description: Metadata definitions for the module, this is optional construct allowing override of the module defaults defintions of validation expressions, error messages and default tags.
+Description: Metadata definitions for the module, this is optional construct allowing override of the module defaults defintions of validation expressions, error messages, resource timeouts and default tags.
 
 Type:
 
 ```hcl
 object({
-    validator_error_messages = optional(map(string), {})
-    validator_expressions    = optional(map(string), {})
-    tags                     = optional(map(string), {})
-  })
-```
-
-Default: `{}`
-
-### <a name="input_resource_timeouts"></a> [resource\_timeouts](#input\_resource\_timeouts)
-
-Description: Resource timeouts map is serving as common interface for possible remote override of module resource timeout values.
-
-Type:
-
-```hcl
-map(
-    object({
+    resource_timeouts = optional(object({
       create = optional(string, "30m")
       read   = optional(string, "5m")
       update = optional(string, "30m")
       delete = optional(string, "30m")
-    })
-  )
+    }), {})
+    tags                     = optional(map(string), {})
+    validator_error_messages = optional(map(string), {})
+    validator_expressions    = optional(map(string), {})
+  })
 ```
 
-Default:
-
-```json
-{
-  "default": {}
-}
-```
+Default: `{}`
 
 ### <a name="input_tags"></a> [tags](#input\_tags)
 
@@ -171,6 +152,9 @@ The minimal usage for the module is as follows:
 ```hcl
 module "template" {
     source = "../.."
+    
+    resource_group_name = "myResourceGroup"
+    location = "northeurope"
 }
 ```
 ## Contributing
