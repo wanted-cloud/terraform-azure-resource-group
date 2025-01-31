@@ -1,7 +1,7 @@
 <!-- BEGIN_TF_DOCS -->
-# wanted-cloud/terraform-module-template
+# wanted-cloud/terraform-azure-resource-group
 
-This repository represents a template for a Terraform building block module as we think it should be done, so it's for sure opinionated but in our eyes simple and powerful. Feel free to use or contribute.
+Terraform building block module of Azure Resource Group.
 
 ## Table of contents
 
@@ -15,19 +15,82 @@ This repository represents a template for a Terraform building block module as w
 
 ## Requirements
 
-No requirements.
+The following requirements are needed by this module:
+
+- <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (>= 1.9)
+
+- <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) (>=4.17.0)
 
 ## Providers
 
-No providers.
+The following providers are used by this module:
+
+- <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) (>=4.17.0)
 
 ## Required Inputs
 
-No required inputs.
+The following input variables are required:
+
+### <a name="input_location"></a> [location](#input\_location)
+
+Description: The location/region where the resources will be created.
+
+Type: `string`
+
+### <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name)
+
+Description: The name of the resource group in which the resources will be created.
+
+Type: `string`
 
 ## Optional Inputs
 
 The following input variables are optional (have default values):
+
+### <a name="input_budgets"></a> [budgets](#input\_budgets)
+
+Description: List of budgets to be assigned under created resource group.
+
+Type:
+
+```hcl
+list(
+    object({
+      name       = string
+      amount     = number
+      time_grain = string
+      start_date = string
+      end_date   = string
+      filter = object({
+        dimension = list(object({
+          name   = string
+          values = list(string)
+        }))
+        tag = list(object({
+          name   = string
+          values = list(string)
+        }))
+      })
+      notifications = list(object({
+        enabled        = bool
+        threshold      = number
+        operator       = string
+        threshold_type = string
+        contact_emails = list(string)
+      }))
+    })
+  )
+```
+
+Default: `[]`
+
+### <a name="input_managed_by"></a> [managed\_by](#input\_managed\_by)
+
+Description: The ID of the resource that manages this resource group.
+
+Type: `string`
+
+Default: `""`
 
 ### <a name="input_metadata"></a> [metadata](#input\_metadata)
 
@@ -70,13 +133,32 @@ Default:
 }
 ```
 
+### <a name="input_tags"></a> [tags](#input\_tags)
+
+Description: Map of tags to be assigned to the resource group.
+
+Type: `object({})`
+
+Default: `{}`
+
 ## Outputs
 
-No outputs.
+The following outputs are exported:
+
+### <a name="output_budgets"></a> [budgets](#output\_budgets)
+
+Description: The created resource group assigned budgets.
+
+### <a name="output_resource_group"></a> [resource\_group](#output\_resource\_group)
+
+Description: The created resource group object.
 
 ## Resources
 
-No resources.
+The following resources are used by this module:
+
+- [azurerm_consumption_budget_resource_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/consumption_budget_resource_group) (resource)
+- [azurerm_resource_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) (resource)
 
 ## Usage
 
