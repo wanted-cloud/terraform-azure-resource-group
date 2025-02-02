@@ -61,15 +61,28 @@ variable "budgets" {
         }))
       }), null)
       notifications = list(object({
+        contact_emails = optional(list(string))
+        contact_groups = optional(list(string))
+        contact_roles  = optional(list(string))
         enabled        = optional(bool, true)
         name           = string
         threshold      = number
         operator       = string
         threshold_type = optional(string)
-        contact_emails = optional(list(string))
-        contact_groups = optional(list(string))
-        contact_roles  = optional(list(string))
       }))
     })
   )
+
+  validation {
+    condition = alltrue([
+      for budget in var.budgets : 
+        budget.time_grain != null ? can(
+          regex(
+            local.metadata.validator_expressions["azurerm_consumption_budget_resource_group_time_grain"],
+            budget.time_grain
+          )
+        ) : true
+    ])
+    error_message = local.metadata.validator_error_messages["azurerm_consumption_budget_resource_group_time_grain"]
+  }
 }
