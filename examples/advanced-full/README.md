@@ -1,0 +1,1 @@
+# wanted-cloud/terraform-azure-resource-group full example
