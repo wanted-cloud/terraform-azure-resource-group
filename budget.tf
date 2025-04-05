@@ -15,7 +15,7 @@ resource "azurerm_consumption_budget_resource_group" "this" {
   }
 
   dynamic "filter" {
-    for_each = lookup(each.value, "filter", null) != null ? [ each.value.filter ] : []
+    for_each = lookup(each.value, "filter", null) != null ? [each.value.filter] : []
     content {
       dynamic "dimension" {
         for_each = lookup(filter.value, "dimensions", [])
