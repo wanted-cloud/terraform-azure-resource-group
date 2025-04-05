@@ -19,7 +19,7 @@ module "template" {
       resource_timeouts = {
         default = {
           create = "30m"
-          readx = "5x"
+          read = "15m"
           update = "30m"
           delete = "30m"
         }

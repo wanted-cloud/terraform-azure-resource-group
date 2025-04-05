@@ -38,4 +38,22 @@ variable "metadata" {
     validator_error_messages = optional(map(string), {})
     validator_expressions    = optional(map(string), {})
   })
+
+  validation {
+    condition = alltrue(
+      flatten([
+        for value in var.metadata.resource_timeouts : [
+          for timeout in value : timeout != null
+          ? can(
+            regex(
+              "^[0-9]+[smh]$",
+              timeout
+            )
+          )
+          : true
+        ]
+      ])
+    )
+    error_message = "Resource timeouts must be in the format of 30m, 5s, 1h etc. as specified by the regex."
+  }
 }
