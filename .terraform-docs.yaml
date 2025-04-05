@@ -33,7 +33,7 @@ content: |-
 
   ```hcl
   module "example" {
-    source  = "app.terraform.io/wanted-cloud/azure/resource-group"
+    source  = "wanted-cloud/resource-group/azure"
     version = "x.y.z"
   }
   ```
