@@ -29,6 +29,15 @@ content: |-
   
   > For more detailed examples navigate to `examples` folder of this repository.
 
+  Module was also published via Terraform Registry and can be used as a module from the registry.
+
+  ```hcl
+  module "example" {
+    source  = "app.terraform.io/wanted-cloud/azure/resource-group"
+    version = "x.y.z"
+  }
+  ```
+
   ### Basic usage example
 
   The minimal usage for the module is as follows:
