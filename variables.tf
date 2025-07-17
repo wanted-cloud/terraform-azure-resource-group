@@ -31,7 +31,7 @@ variable "location" {
 variable "tags" {
   default     = {}
   description = "Map of tags to be assigned to the resource group."
-  type        = object({})
+  type        = map(string)
 }
 
 variable "managed_by" {
