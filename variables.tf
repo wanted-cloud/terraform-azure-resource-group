@@ -1,4 +1,4 @@
-variable "resource_group_name" {
+variable "name" {
   description = "The name of the resource group in which the resources will be created."
   type        = string
 
@@ -6,7 +6,7 @@ variable "resource_group_name" {
     condition = can(
       regex(
         local.metadata.validator_expressions["azurerm_resource_group_name"],
-        var.resource_group_name
+        var.name
       )
     )
     error_message = local.metadata.validator_error_messages["azurerm_resource_group_name"]

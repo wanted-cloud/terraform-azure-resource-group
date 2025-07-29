@@ -37,7 +37,7 @@ Description: The location/region where the resources will be created!
 
 Type: `string`
 
-### <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name)
+### <a name="input_name"></a> [name](#input\_name)
 
 Description: The name of the resource group in which the resources will be created.
 
